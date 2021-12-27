@@ -7,6 +7,7 @@ var router = express.Router()
 const courseController=require('../controllers/courseController')
 const authController=require('../controllers/authController')
 const adminController=require('../controllers/adminController')
+const instructorController = require('../controllers/instructorController')
 
 //importing middlewares
 const checkAuth=require('../middlewares/checkAuth')
@@ -24,6 +25,14 @@ router.get('/logout',authController.logout)
 router.get('/register',authController.register_page_get)
 router.post('/register',authController.register_user)
 router.get('/transaction',checkAuth,authController.get_transaction_page)
+
+
+//insRequests
+router.get('/main/ins_register',instructorController.instructor_register_page_get)
+router.post('/main/ins_register',instructorController.instructor_register_user)
+router.get('/main/show_requests',instructorController.get_all_pending_requests)
+router.post('/main/grantPermission',instructorController.addInsToDB)
+router.post('/main/evokePermission',instructorController.updateInsToDB)
 
 //Admin routes
 //Serving Static files

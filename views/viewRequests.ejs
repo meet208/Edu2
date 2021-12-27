@@ -1,0 +1,64 @@
+<%- include('./partials/header'); -%>
+<div class="container">
+    <h2><%= message %></h2>
+
+    <br>
+
+    <script>
+        $(document).ready(function () {
+            $('select').formSelect();
+        });
+        dec=document.getElementById("dec")
+    
+        
+    </script>
+    
+    <br>
+    <div class="row">
+        <% if(requests.length>0) { %>
+                    <%for(var i=0;i< requests.length ; i++){%>
+                        
+                            <div class="col s12 m4 l4">
+                                <div class="card">
+                                    <div class="card-content">
+                                        <form action="/main/grantPermission" method="post">    
+                                        <h5><strong><%= requests[i].name %></strong> </h5>
+                                        <p><strong>Mail: <%= requests[i].email %></strong></p>
+                                        <h5>Status:<%= requests[i].status %></h5>
+                                        <button type="submit"  class="btn btn-success">Grant</button>
+                                        <input  name="name"  type="hidden" value=<%=requests[i].name%>>
+                                        <input  name="mail"  type="hidden" value=<%=requests[i].email%>>
+                                        <input  name="password"  type="hidden" value=<%=requests[i].password%>>
+                                        <input  name="id"  type="hidden" value=<%=requests[i]._id%>>
+                                    </form>
+                                    <form action="/main/evokePermission" method="post">    
+                                        <input  name="id"  type="hidden" value=<%=requests[i]._id%>>
+                                        <button type="submit"  class="btn btn-danger">Decline</button>
+                                    </form>
+                                </div>
+                                </div>
+                            </div>
+                        
+
+                    <%}%>
+        <%} else {%>
+                    <h4>Sorry! No requests available.</h4>
+                    <% } %>
+            </div>
+
+            <br>
+
+            <!-- pagination -->
+            <ul class="pagination center-align">
+                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                <li class="waves-effect active"><a href="#!">1</a></li>
+                <li class="waves-effect"><a href="#!">2</a></li>
+                <li class="waves-effect"><a href="#!">3</a></li>
+                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            </ul>
+
+            <br>
+
+        </div>
+
+        <%- include('./partials/footer'); -%>
