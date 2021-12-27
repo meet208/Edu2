@@ -1,5 +1,9 @@
 const Category = require('../models/category');
+const Instructor = require('../models/instructor');
+const insRequest = require('../models/ins_request');
 const Course = require('../models/courses');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 exports.get_newCourse_page = (req, res) => {
     Category.find((err, categories) => {
@@ -109,23 +113,52 @@ exports.get_adminLogin_page = (req, res) => {
     });
 }
 
-exports.admin_login = (req, res) => {
-    if (req.body.username == 'mp208' && req.body.password == '123456') {
-        req.session.adminLogged = true
-        res.redirect('/admin/newCourse');
-    } else {
-        return res.render('adminLogin', {
-            isLogged: req.session.isLogged,
-            adminLogged: req.session.adminLogged,
-            message: "User Name or password entered is incorrect."
-        })
-    }
-}
-
 exports.admin_logout = (req, res) => {
     req.session.destroy((err) => {
         if (err) console.log(err);
         console.log('logged out');
         res.redirect('/');
+    })
+}
+
+
+
+exports.admin_login = (req, res) => {
+    console.log(req.body.email);
+    Instructor.findOne({email: req.body.email}, (err, user) => {
+        if (err) {
+            console.log(err)
+            return res.render('login', {
+                isLogged: req.session.isLogged,
+                adminLogged: req.session.adminLogged,
+                message: "Some error occured in login. Please try again later."
+            })
+        }
+        if (!user) {
+            return res.render('login', {
+                isLogged: req.session.isLogged,
+                adminLogged: req.session.adminLogged,
+                message: "There is no user with that email."
+            })
+        } else {
+                bcrypt.compare(req.body.password, user.password, function (err, result) {
+                    if(err){
+                        consoloe.log(err);
+                    }
+                    if (result == true) {
+                        //user authenticated
+                        req.session.adminLogged = true
+                        res.redirect('/admin/newCourse');
+                    }
+                    else {
+                        return res.render('login', {
+                            isLogged: req.session.isLogged,
+                            adminLogged: req.session.adminLogged,
+                            message: "Email or password entered is incorrect."
+                        })
+                    }        
+            });
+
+        }
     })
 }

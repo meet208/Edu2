@@ -1,5 +1,6 @@
 const Category = require('../models/category');
 const Course = require('../models/courses');
+const insRequest = require('../models/ins_request');
 const Comment = require('../models/comments')
 const mongoose = require('mongoose');
 const User = require('../models/user');

@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const insRequest = require('../models/ins_request');
 const bcrypt = require('bcrypt');
 const Transaction = require('../models/transactions');
 const transactions = require('../models/transactions');
@@ -11,6 +12,7 @@ exports.register_page_get = (req, res) => {
         message: "Please enter all the genuine credentials as these will be used to contact you for prize money."
     });
 }
+
 
 exports.register_user = (req, res) => {
     console.log(req.body);
