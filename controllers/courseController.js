@@ -197,7 +197,6 @@ exports.verify_payment = async (req, res) => {
                 course.enrolledUsers = course.enrolledUsers + 1;
                 course.save();
             }).select('-description -aboutInstructor')
-
         })
 
         res.redirect('/myCourses');
@@ -226,6 +225,9 @@ exports.get_checkout_page = async (req, res) => {
             currency: "INR",
         };
         instance.orders.create(options, function (err, order) {
+            if(err){
+                console.log(err)
+            }
             console.log(order);
             return res.render('checkout', {
                 userName: user.name,
