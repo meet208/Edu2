@@ -15,6 +15,7 @@ var CourseSchema= new mongoose.Schema({
     videoUrl:String,
     enrolledUsers:{ type:Number, default:0 },
     watchHours:Number,
+    isLive:{type:Boolean, default:0}
 });
 module.exports=mongoose.model('Course',CourseSchema);
 

@@ -31,6 +31,9 @@
                     <%}%>
                     
                     <a href="/watchCourse/<%=courses[i]._id%>">Start Learning</a>
+                    <% if(courses[i].isLive) {%>
+                        <a href="https://mirotalk.herokuapp.com/join/<%=courses[i]._id%>">View Live</a>
+                    <% } %>
                 </div>
             </div>
         </div>
