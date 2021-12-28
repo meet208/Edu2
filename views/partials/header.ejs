@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Udemy</title>
+    <title>EduSession</title>
 
     <!-- Main css -->
     <link rel="stylesheet" href="/main.css">
@@ -24,17 +24,20 @@
     <header>
         <nav>
             <div class="nav-wrapper grey darken-3">
-                <a href="#!" class="brand-logo red-text lighten-1">Udemy</a>
+                <a href="#!" class="brand-logo red-text lighten-1">EduSession</a>
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <li id="home" class="active"><a href="/">Home</a></li>
                     <li id="courses"><a href="/courses">Courses</a></li>
-                    <li id="myCourses"><a href="/myCourses">My Course</a></li>
+
+                    <li id="requestadmin"><a href="/main/ins_register">Admin Request</a></li>
 
                     <%if(isLogged==true){%>
+                        <li id="myCourses"><a href="/myCourses">My Course</a></li>
                         <li id="logout"><a href="/logout">Logout</a></li>
                         <li id="trans"><a href="/transaction">My transactions</a></li>
                     <%}else if(adminLogged==true){%>
+                        <li id="createdCourses"><a href="/myPublishedCourses">Created Courses</a></li>
                         <li id="adminLogout"><a href="/admin/logout">Logout</a></li>
                         <li id="newCourse"><a href="/admin/newCourse">New Course</a></li>
                         <li id="addCategory"><a href="/admin/addCategory">New Category</a></li>

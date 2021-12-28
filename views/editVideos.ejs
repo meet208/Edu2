@@ -1,0 +1,65 @@
+<%- include('./partials/header'); -%>
+<br>
+<div class="container ">
+    <h4 class="center-align"><%= message %></h4>
+    <div class="container">
+        <div class="row">
+            <!-- <div class="col s12 m4 l3"> -->
+                <%if(course!=null){%>
+                <div class="card">
+                    
+                    <div class="card-content">
+                        <h5><strong><%= course.title %></strong> </h5>
+                        <p><strong><%= course.instructor %></strong></p>
+                        <div class="row">
+                            <div class="col">
+                                <p><strong><%=course.enrolledUsers%> enrolled students</strong></p>
+                            </div>
+                            <div class="col">
+                                <p><strong><%= course.likes %> likes</strong></p>
+                            </div>
+                        </div>
+                        <h5>₹<%= course.price %></h5>
+                    </div>
+                </div>
+                <%}%>
+            <!-- </div> -->
+            <div class="col s12 m4 l3">
+                <%if(course!=null){%>
+                <form action="/admin/uploadVideo/<%=course._id%>" method="post" enctype="multipart/form-data">
+                    <div class="input-field">
+                        <p>Upload the video folder containing all the video lectures. Remeber you can't upload more than 100 files.</p>
+                        <!-- <input name="videoFolder" type="file" webkitdirectory mozdirectory /> -->
+                        <input id="imgage" type="file" name="video"  accept="video/*" required>
+                    </div>
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                    </button>
+                </form>
+                <%}%>
+            </div>
+
+        </div>
+
+        <br>
+    </div>
+    <br>
+</div>
+
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col s12 m6 l6">
+            <h4>Course Track</h4>
+            <div class="collection">
+                <%for(var i=0; i< courseTracks.length ; i++ ){ %>
+                    <a href="/watchCourse/<%=courseID%>?trackNum=<%=i%>" class="collection-item"><%=courseTracks[i]%></a>
+                <%}%>
+            </div>
+        </div>
+    </div>
+    <div class="input-field">
+        <p>Add file.</p>
+        <input id="img" type="file" name="img" value="<%=course.imageUrl%>" accept="video/*" required>
+    </div>
+</div>
+<%- include('./partials/footer'); -%>

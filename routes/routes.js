@@ -14,6 +14,7 @@ const checkAuth=require('../middlewares/checkAuth')
 const adminCheckAuth=require('../middlewares/adminCheckAuth')
 const uploadImage=require('../middlewares/multerUploadImage')
 const uploadVideo=require('../middlewares/multerUploadVideo')
+const uploadEditVideo=require('../middlewares/multeraddVideoFile')
 const checkPurchasedCourse=require('../middlewares/checkPurchasedCourse')
 const videoController=require('../controllers/videoController')
 const setFolderName=require('../middlewares/setFolderName')
@@ -26,6 +27,8 @@ router.get('/register',authController.register_page_get)
 router.post('/register',authController.register_user)
 router.get('/transaction',checkAuth,authController.get_transaction_page)
 
+//Admin routes below
+
 
 //insRequests
 router.get('/main/ins_register',instructorController.instructor_register_page_get)
@@ -33,8 +36,10 @@ router.post('/main/ins_register',instructorController.instructor_register_user)
 router.get('/main/show_requests',instructorController.get_all_pending_requests)
 router.post('/main/grantPermission',instructorController.addInsToDB)
 router.post('/main/evokePermission',instructorController.updateInsToDB)
+router.get('/myPublishedCourses',adminCheckAuth,instructorController.view_instructor_courses)
 
-//Admin routes
+
+
 //Serving Static files
 router.use('/admin/',express.static('public'));
 router.get('/admin/login', adminController.get_adminLogin_page)
@@ -42,10 +47,17 @@ router.post('/admin/login',adminController.admin_login)
 router.get('/admin/logout',adminController.admin_logout)
 router.get('/admin/newCourse',adminCheckAuth,adminController.get_newCourse_page)
 router.post('/admin/newCourse',adminCheckAuth,uploadImage.single('img'),adminController.create_newCourse)
-router.get('/admin/addCategory',adminCheckAuth,adminController.get_addCategory_page);
+router.get('/admin/addCategory',adminCheckAuth,adminController.get_addCategory_page)
 router.post('/admin/addCategory',adminCheckAuth,adminController.create_newCategory)
 router.get('/admin/uploadVideo/:courseID',adminCheckAuth,adminController.get_uploadVideo_page)
 router.post('/admin/uploadVideo/:courseID',adminCheckAuth,setFolderName,uploadVideo,adminController.create_uploadVideo)
+router.get('/admin/golive/:courseID',adminCheckAuth,adminController.get_golive);
+router.get('/admin/endlive/:courseID',adminCheckAuth,adminController.get_endlive);
+
+router.get('/admin/editCourse/:courseID',adminCheckAuth,adminController.get_editCourse_page)
+router.post('/admin/editCourse/:courseID',adminCheckAuth,uploadImage.single('img'),adminController.update_editCourse)
+router.get('/admin/edit/uploadVideo/:courseID',adminCheckAuth,adminController.get_uploadVideo_page_for_edit)
+router.post('/admin/edit/uploadVideo/:courseID',adminCheckAuth,uploadEditVideo.single('video'),adminController.update_uploadVideo)
 
 // Home Routes
 router.get('/',courseController.get_home_page)

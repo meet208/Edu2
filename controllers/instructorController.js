@@ -139,3 +139,40 @@ exports.addInsToDB = (req, res) => {
     res.redirect("/")
 }
 //*===
+
+
+exports.view_instructor_courses= (req, res) => {
+    Instructor.findById(req.session.admin_id, (err, user) => {
+        if (err) console.log(err)
+
+        var addedCoursesIds = user.addedCourses;
+        Course.find({ '_id': { $in: addedCoursesIds } }, async(err, courses) => {
+            if (err) console.log("ERROR in addedCourse display \n"+err)
+
+            //find whether course is liked or not
+            // const size = await User.aggregate([{ $match: { _id: req.session.user_id } }, { $project: { courses: { $size: '$likedCourses' } } }])
+            // var likedCourses = (size[0].courses > 0) ? user.likedCourses : [];
+            // var Liked = []
+            // var alreadyLiked;
+            // for (let i = 0; i < courses.length; i++) {
+            //     alreadyLiked = false;
+            //     for (let j = 0; j < likedCourses.length; j++) {
+            //         if (likedCourses[j].toString() == courses[i]._id.toString()) {
+            //             alreadyLiked = true;
+            //         }
+            //     }
+            //     Liked[i] = alreadyLiked
+            // }
+
+
+            return res.render('viewInstructorCourses', {
+                isLogged: req.session.isLogged,
+                adminLogged: req.session.adminLogged,
+                courses: courses,
+                Liked:addedCoursesIds
+            })
+        }).select('-description -aboutInstructor')
+    })
+}
+
+
