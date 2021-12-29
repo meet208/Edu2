@@ -13,6 +13,7 @@ var CourseSchema= new mongoose.Schema({
     price:Number, 
     imageUrl:String,
     videoUrl:String,
+    fileName:String,
     enrolledUsers:{ type:Number, default:0 },
     watchHours:Number,
     isLive:{type:Boolean, default:0}
