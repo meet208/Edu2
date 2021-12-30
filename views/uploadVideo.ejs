@@ -39,7 +39,14 @@
                 </form>
                 <%}%>
             </div>
-
+            <!-- <form action="/admin/uploadFile/<%=course._id%>" method="post" enctype="multipart/form-data">
+                <div class="input-field">
+                    <p>Thumbnail for your course.</p>
+                    <input type="file" name="file" id="file" class="custom-file-input">
+                    <label for="file" class="custom-file-label">Choose File</label>
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                </div>
+            </form> -->
         </div>
 
         <br>
@@ -49,3 +56,99 @@
 
 </div>
 <%- include('./partials/footer'); -%>
+
+
+
+<!-- <form action="/upload" method="POST" enctype="multipart/form-data">
+    <div class="custom-file mb-3">
+      <input type="file" name="file" id="file" class="custom-file-input">
+      <label for="file" class="custom-file-label">Choose File</label>
+    </div>
+ <input type="submit" value="Submit" class="btn btn-primary btn-block">
+</form> -->
+
+
+
+
+
+
+
+
+
+<!-- 
+
+app.get('/', (req, res) => {
+    gfs.files.find().toArray((err, files) => {
+      // Check if files
+      if (!files || files.length === 0) {
+        res.render('index', { files: false });
+      } else {
+        files.map(file => {
+          if (
+            file.contentType === 'image/jpeg' ||
+            file.contentType === 'image/png'
+          ) {
+            file.isImage = true;
+          } else {
+            file.isImage = false;
+          }
+        });
+        res.render('index', { files: files });
+      }
+    });
+  }); -->
+
+
+
+<!-- 
+  app.get('/files/:filename', (req, res) => {
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+      // Check if file
+      if (!file || file.length === 0) {
+        return res.status(404).json({
+          err: 'No file exists'
+        });
+      }
+      // If File exists this will get executed
+      const readstream = gfs.createReadStream(file.filename);
+      return readstream.pipe(res);
+    });
+  });
+  
+  
+  
+  
+  app.get('/image/:filename', (req, res) => {
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+      // Check if the input is a valid image or not
+      if (!file || file.length === 0) {
+        return res.status(404).json({
+          err: 'No file exists'
+        });
+      }
+  
+      // If the file exists then check whether it is an image
+      if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+        // Read output to browser
+        const readstream = gfs.createReadStream(file.filename);
+        readstream.pipe(res);
+      } else {
+        res.status(404).json({
+          err: 'Not an image'
+        });
+      }
+    });
+  });
+  
+  // delete function to remove the file from the database
+  app.delete('/files/:id', (req, res) => {
+    gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
+      if (err) {
+        return res.status(404).json({ err: err });
+      }
+  
+      res.redirect('/');
+    });
+  });
+  
+   --> -->

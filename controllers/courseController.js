@@ -8,6 +8,26 @@ const Razorpay = require('razorpay');
 const Transaction = require('../models/transactions');
 const path = require('path');
 const fs = require('fs');
+// ===
+
+const {GridFsStorage} = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const multer = require('multer');
+// const mongoose = require('mongoose')
+
+const mongoURI = 'mongodb://localhost:27017/udemyclone';
+
+// Create mongo connection
+const conn = mongoose.createConnection(mongoURI);
+
+// Init gfs
+let gfs;
+
+conn.once('open', () => {
+  // Init stream
+  gfs = Grid(conn.db, mongoose.mongo);  
+  gfs.collection('uploads');
+});
 
 //razorpay instance initialization
 var instance = new Razorpay({
@@ -297,7 +317,29 @@ exports.get_watchCourse_page = async (req, res) => {
                 courseTracks.push(file.toString());
             });
 
-
+//===========Filen
+            filename=course.fileName;
+            let finalFile=1;
+        gfs.files.findOne({ filename: filename }, (err, file) => {
+            // Check if file
+            if (!file || file.length === 0) {
+            return res.status(404).json({
+                err: 'No file exists'
+            });
+            }
+            // If File exists this will get executed
+            let buffer = "";
+            const readStream = gfs.createReadStream(file.filename);
+            readStream.on("data", function (chunk) {
+                buffer += chunk;
+            });
+    
+            // dump contents to console when complete
+            readStream.on("end", function () {
+                console.log("contents of file:\n\n", buffer);
+            });
+            // finalFile= readstream.pipe(res);
+        });
             return res.render('watchCourse', {
                 isLogged: req.session.isLogged,
                 adminLogged: req.session.adminLogged,
@@ -305,7 +347,8 @@ exports.get_watchCourse_page = async (req, res) => {
                 path: path.join(directoryPath, courseTracks[trackNum]),
                 imageUrl: course.imageUrl,
                 trackNum: trackNum,
-                courseTracks: courseTracks
+                courseTracks: courseTracks,
+                // finalFile:finalFile
             });
         });
 

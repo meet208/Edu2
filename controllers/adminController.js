@@ -100,6 +100,27 @@ exports.get_uploadVideo_page = (req, res) => {
         });
     })
 }
+// get_fileUpload
+exports.get_fileUpload = (req, res) => {
+    const courseID = req.params.courseID;
+    Course.findById(courseID, (err, course) => {
+        if (err) {
+            return res.render('uploadVideo', {
+                isLogged: req.session.isLogged,
+                adminLogged: req.session.adminLogged,
+                message: "Some error occurred while creating the course. Retry again.",
+                course: null
+            });
+        }
+        return res.render('uploadDocs', {
+            isLogged: req.session.isLogged,
+            adminLogged: req.session.adminLogged,
+            message: "Upload the folder of videos containing the lectures. Naming should be done as 1.mp3, 2.mp4 etc",
+            course: course
+        });
+    })
+}
+
 //++++
 exports.get_uploadVideo_page_for_edit = (req, res) => {
     const courseID = req.params.courseID;
@@ -220,6 +241,23 @@ exports.create_uploadVideo = (req, res) => {
             });
         }
         course.videoUrl = req.videoFolder;
+        // course.fileName = req.fileName;
+        course.save();
+        res.redirect('/admin/uploadFile/'+courseID)
+    })
+}
+exports.create_fileUpload = (req, res) => {
+    const courseID = req.params.courseID;
+    Course.findById(courseID, (err, course) => {
+        if (err) {
+            return res.render('uploadVideo', {
+                isLogged: req.session.isLogged,
+                adminLogged: req.session.adminLogged,
+                message: "Some error occurred while creating the course. Can't fint the course",
+                course: null
+            });
+        }
+        course.fileName = req.fileName;
         course.save();
         res.redirect('/courses')
     })

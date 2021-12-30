@@ -18,7 +18,7 @@ const uploadEditVideo=require('../middlewares/multeraddVideoFile')
 const checkPurchasedCourse=require('../middlewares/checkPurchasedCourse')
 const videoController=require('../controllers/videoController')
 const setFolderName=require('../middlewares/setFolderName')
-
+const fileUpload=require('../middlewares/fileUpload')
 //Auth routes
 router.get('/login',authController.login_page_get)
 router.post('/login',authController.login_user)
@@ -51,8 +51,12 @@ router.get('/admin/addCategory',adminCheckAuth,adminController.get_addCategory_p
 router.post('/admin/addCategory',adminCheckAuth,adminController.create_newCategory)
 router.get('/admin/uploadVideo/:courseID',adminCheckAuth,adminController.get_uploadVideo_page)
 router.post('/admin/uploadVideo/:courseID',adminCheckAuth,setFolderName,uploadVideo,adminController.create_uploadVideo)
+
 router.get('/admin/golive/:courseID',adminCheckAuth,adminController.get_golive);
 router.get('/admin/endlive/:courseID',adminCheckAuth,adminController.get_endlive);
+router.get('/admin/uploadFile/:courseID',adminCheckAuth,adminController.get_fileUpload)
+
+router.post('/admin/uploadFile/:courseID',adminCheckAuth,fileUpload,adminController.create_fileUpload)
 
 router.get('/admin/editCourse/:courseID',adminCheckAuth,adminController.get_editCourse_page)
 router.post('/admin/editCourse/:courseID',adminCheckAuth,uploadImage.single('img'),adminController.update_editCourse)
