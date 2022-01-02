@@ -318,28 +318,28 @@ exports.get_watchCourse_page = async (req, res) => {
             });
 
 //===========Filen
-            filename=course.fileName;
-            let finalFile=1;
-        gfs.files.findOne({ filename: filename }, (err, file) => {
-            // Check if file
-            if (!file || file.length === 0) {
-            return res.status(404).json({
-                err: 'No file exists'
-            });
-            }
+            // filename=course.fileName;
+            // //let finalFile=1;
+            // gfs.files.findOne({ filename: filename }, (err, file) => {
+            // // Check if file
+            // if (!file || file.length === 0) {
+            // return res.status(404).json({
+            //     err: 'No file exists'
+            // });
+            // }
             // If File exists this will get executed
-            let buffer = "";
-            const readStream = gfs.createReadStream(file.filename);
-            readStream.on("data", function (chunk) {
-                buffer += chunk;
-            });
+            // let buffer = "";
+            // const readStream = gfs.createReadStream(file.filename);
+            // readStream.on("data", function (chunk) {
+            //     buffer += chunk;
+            // });
     
-            // dump contents to console when complete
-            readStream.on("end", function () {
-                console.log("contents of file:\n\n", buffer);
-            });
+            // // dump contents to console when complete
+            // readStream.on("end", function () {
+            //     console.log("contents of file:\n\n", buffer);
+            // });
             // finalFile= readstream.pipe(res);
-        });
+        // });
             return res.render('watchCourse', {
                 isLogged: req.session.isLogged,
                 adminLogged: req.session.adminLogged,
@@ -356,6 +356,47 @@ exports.get_watchCourse_page = async (req, res) => {
     })
 
 }
+
+
+exports.get_book_page = async (req, res) => {
+    Course.findById(req.params.courseID, (err, course) => {
+//===========Filen
+            if(err){
+                console.log(err);
+            }
+            filename=course.fileName;
+            //let finalFile=1;
+            gfs.files.findOne({ filename: filename }, (err, file) => {
+            // Check if file
+            if (!file || file.length === 0) {
+            return res.status(404).json({
+                err: 'No file exists'
+            });
+            }
+            //If File exists this will get executed
+            //let buffer = "";
+            const readStream = gfs.createReadStream(file.filename);
+            readStream.pipe(res);
+            // readStream.on("data", function (chunk) {
+            //     buffer += chunk;
+            // });
+    
+            // // dump contents to console when complete
+            // readStream.on("end", function () {
+            //     console.log("contents of file:\n\n", buffer);
+            // });
+            // finalFile= readstream.pipe(res);
+        // });
+        });
+
+
+    })
+
+}
+
+
+
+
 
 exports.create_comment = (req, res) => {
     const courseID = req.params.courseID

@@ -80,6 +80,7 @@ router.get('/checkout/:courseID',checkAuth,courseController.get_checkout_page)
 router.post('/checkout/:courseID',courseController.verify_payment)
 
 router.get('/watchCourse/:courseID',checkAuth,checkPurchasedCourse,courseController.get_watchCourse_page);
+router.get('/viewbook/:courseID',checkAuth,checkPurchasedCourse,courseController.get_book_page)
 router.post('/comment/:courseID',checkAuth,checkPurchasedCourse,courseController.create_comment);
 router.get('/comment/delete/:commentID',checkAuth,courseController.delete_comment)
 router.get('/video/:courseID',checkAuth,checkPurchasedCourse,videoController.get_video)
