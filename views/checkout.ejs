@@ -34,7 +34,7 @@
                 <form action="/checkout/<%= course._id %>" method="POST">
                     <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="rzp_test_TIbsb4YUfg8IpB"
                         data-amount="<%= amount %>" data-currency="INR" data-order_id="<%= order_id %>"
-                        data-buttontext="PAY NOW" data-name="Udemy" data-description="Test transaction"
+                        data-buttontext="PAY NOW" data-name="EduSession" data-description="Test transaction"
                         data-image="/images/udemyLogo.jpg" data-prefill.name="<%= userName %>"
                         data-prefill.email="<%= userEmail %>" data-theme.color="#F37254">
                         </script>

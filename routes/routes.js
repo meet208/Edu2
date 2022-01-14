@@ -29,7 +29,6 @@ router.get('/transaction',checkAuth,authController.get_transaction_page)
 
 //Admin routes below
 
-
 //insRequests
 router.get('/main/ins_register',instructorController.instructor_register_page_get)
 router.post('/main/ins_register',instructorController.instructor_register_user)

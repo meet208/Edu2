@@ -376,7 +376,7 @@ exports.get_book_page = async (req, res) => {
             //If File exists this will get executed
             //let buffer = "";
             const readStream = gfs.createReadStream(file.filename);
-            readStream.pipe(res);
+            readStream.pipe(res); 
             // readStream.on("data", function (chunk) {
             //     buffer += chunk;
             // });

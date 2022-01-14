@@ -1,0 +1,25 @@
+#edunav{
+    background: none;
+}
+
+#edulist{
+    background:none;
+}
+
+#edulist li a{
+    color:black;
+    font-weight: 600;
+}
+
+#edulogodot{
+    color:#F44336;
+}
+
+#edulogo{
+    color:black;
+    font-weight:800;
+}
+
+#edumenu{
+    color:black;
+}
